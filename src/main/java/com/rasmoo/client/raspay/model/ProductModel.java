@@ -1,18 +1,17 @@
 package com.rasmoo.client.raspay.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id; // Correção aqui
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank; // Jakarta EE
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,7 +27,7 @@ public class ProductModel implements Serializable {
     private String id;
 
     @Indexed(unique = true)
-    @Size(min = 6,max = 20)
+    @Size(min = 6, max = 20)
     private String acronym;
 
     @NotBlank
@@ -40,5 +39,4 @@ public class ProductModel implements Serializable {
     @NotNull
     @JsonIgnore
     private LocalDate dtCreation = LocalDate.now();
-
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/v1/order")
@@ -26,7 +26,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderModel> create(@Valid  @RequestBody OrderDto orderDto){
+    public ResponseEntity<OrderModel> create(@Valid @RequestBody OrderDto orderDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.create(orderDto));
     }
 }

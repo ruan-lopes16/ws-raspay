@@ -1,33 +1,32 @@
 package com.rasmoo.client.raspay.controller;
 
-import com.rasmoo.client.raspay.config.SwaggerConfig;
 import com.rasmoo.client.raspay.dto.ProductDto;
 import com.rasmoo.client.raspay.model.ProductModel;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
-@Api(tags = SwaggerConfig.PRODUCT)
+@Tag(name = "Produto", description = "Um produto é criado para que seja efetuada o pagamento. Esse produto possui um nome e uma sigla única identificadora, que deverá ser informado pelo requisitante. Caso a sigla informada, que deverá ter de 6 a 10 caracteres já esteja criada no banco, a API retornará erro.")
 public interface ProductController {
 
-    @ApiOperation(value = "Criar novo produto")
+    @Operation(summary = "Criar novo produto", description = "Cria um novo produto com sigla única")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Produto com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao criar produto"),
-            @ApiResponse(code = 500, message = "Erro interno no serviço"),
+            @ApiResponse(responseCode = "201", description = "Produto criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao criar produto"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no serviço"),
     })
     ResponseEntity<ProductModel> create(@Valid @RequestBody ProductDto dto);
 
-    @ApiOperation(value = "Lista todos os produtos")
+    @Operation(summary = "Lista todos os produtos", description = "Retorna lista completa de produtos cadastrados")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Sucesso na consulta"),
-            @ApiResponse(code = 500, message = "Erro interno no serviço"),
+            @ApiResponse(responseCode = "200", description = "Sucesso na consulta"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no serviço"),
     })
     ResponseEntity<List<ProductModel>> readAll();
 }

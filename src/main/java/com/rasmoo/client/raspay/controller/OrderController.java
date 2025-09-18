@@ -1,25 +1,24 @@
 package com.rasmoo.client.raspay.controller;
 
-import com.rasmoo.client.raspay.config.SwaggerConfig;
 import com.rasmoo.client.raspay.dto.OrderDto;
 import com.rasmoo.client.raspay.model.OrderModel;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
-@Api(tags = SwaggerConfig.ORDER)
+@Tag(name = "Pedido", description = "Para enviar os dados do produto e do cliente, é preciso enviar o 'customer_id' obtido na última chamada. A API irá retornar o 'order_id' que será utilizado na etapa de pagamento. A única opção transação liberada é por meio de um cartão de crédito.")
 public interface OrderController {
 
-    @ApiOperation(value = "Cadastrar um novo pedido")
+    @Operation(summary = "Cadastrar um novo pedido", description = "Cria um pedido vinculando cliente e produto")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Pedido criado com sucesso"),
-            @ApiResponse(code = 400, message = "Erro na requisição do pedido"),
-            @ApiResponse(code = 500, message = "Erro interno no serviço"),
+            @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro na requisição do pedido"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no serviço"),
     })
     ResponseEntity<OrderModel> create(@Valid @RequestBody OrderDto orderDto);
 }

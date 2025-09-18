@@ -1,16 +1,16 @@
 package com.rasmoo.client.raspay.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -19,22 +19,30 @@ import javax.validation.constraints.Size;
 public class CreditCardDto {
 
     @NotBlank(message = "number é obrigatório")
-    @Size(min = 16,max = 16,message = "Cartão inválido")
+    @Size(min = 16, max = 16, message = "Cartão inválido")
     private String number;
 
-    @Size(min = 3,max = 3,message = "cvv deve conter 3 números")
+    @NotNull(message = "cvv é obrigatório")
+    @Min(value = 100, message = "CVV deve ter 3 dígitos")
+    @Max(value = 999, message = "CVV deve ter 3 dígitos")
     private Long cvv;
 
-    @Min(value = 1,message = "month não pode ser menor que 1")
-    @Max(value = 2,message = "month não pode ser maior que 12")
+    @NotNull(message = "month é obrigatório")
+    @Min(value = 1, message = "month não pode ser menor que 1")
+    @Max(value = 12, message = "month não pode ser maior que 12") // Correção aqui
     private Long month;
 
-    @Size(min = 2,max = 2,message = "year deve conter 2 números")
+    @NotNull(message = "year é obrigatório")
+    @Min(value = 23, message = "year deve ser maior que ano atual")
+    @Max(value = 99, message = "year não pode ser maior que 99")
     private Long year;
 
+    @NotBlank(message = "documentNumber é obrigatório")
     @CPF(message = "CPF precisa ser válido")
     private String documentNumber;
 
+    @NotNull(message = "installments é obrigatório")
+    @Min(value = 1, message = "Número de parcelas deve ser pelo menos 1")
+    @Max(value = 12, message = "Máximo 12 parcelas")
     private Long installments;
-
 }

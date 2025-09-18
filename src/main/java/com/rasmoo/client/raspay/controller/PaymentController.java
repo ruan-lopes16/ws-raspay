@@ -1,25 +1,24 @@
 package com.rasmoo.client.raspay.controller;
 
-import com.rasmoo.client.raspay.config.SwaggerConfig;
 import com.rasmoo.client.raspay.dto.PaymentDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
-@Api(tags = SwaggerConfig.PAYMENT)
+@Tag(name = "Pagamento", description = "Para a última etapa, é necessário informar o 'customer_id', o 'order_id' e as informações do cartão de crédito. Um mesmo cartão de crédito não poderá ser usado por clientes diferentes e, além disso, um mesmo cliente não poderá fazer dois pagamentos fora do período de renovação, mesmo que com um cartão de crédito novo.")
 public interface PaymentController {
 
-    @ApiOperation(value = "Processar pagamento")
+    @Operation(summary = "Processar pagamento", description = "Processa o pagamento com cartão de crédito")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Pagamento realizado com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao processar pagamento"),
-            @ApiResponse(code = 401, message = "Pagamento não autorizado"),
-            @ApiResponse(code = 500, message = "Erro interno no serviço"),
+            @ApiResponse(responseCode = "200", description = "Pagamento realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao processar pagamento"),
+            @ApiResponse(responseCode = "401", description = "Pagamento não autorizado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no serviço"),
     })
     ResponseEntity<Boolean> process(@Valid @RequestBody PaymentDto dto);
 }
