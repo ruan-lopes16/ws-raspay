@@ -1,28 +1,14 @@
-version: '3.8'
 services:
   mongo_container:
     image: mongo:7.0
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: felipe
+      MONGO_INITDB_ROOT_USERNAME: rasmoo
       MONGO_INITDB_ROOT_PASSWORD: senha123
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data_container:/data/db
-    networks:
-      - rede
-
-  raspay-api:
-    build: .
-    ports:
-      - "8081:8081"
-    depends_on:
-      - mongo_container
-    environment:
-      MONGODB_HOST: mongo_container
-      MONGODB_USERNAME: felipe
-      MONGODB_PASSWORD: senha123
     networks:
       - rede
 
