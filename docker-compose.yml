@@ -5,6 +5,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: rasmoo
       MONGO_INITDB_ROOT_PASSWORD: senha123
+      MONGO_INITDB_DATABASE: raspay
     ports:
       - "27017:27017"
     volumes:
